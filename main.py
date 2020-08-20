@@ -27,18 +27,21 @@ def find_all_right_truncatable_primes(base: int):
     first_digits = prime_list_finder(base-1)[0]
     base_dividors = [x for x in first_digits if base % x == 0]
     appendables = [x for x in range(base) if all(x % div != 0 for div in base_dividors)]
-    print(first_digits)
-    print(appendables)
-    current_list = first_digits
+    # print(f'The digits that can be appended in each step: {appendables}')
+    current_list = [str(x) for x in first_digits]
     while current_list:
+        yield current_list
         new_list = [str(current)+str(appendable) for current in current_list for appendable in appendables]
         prime_list_finder(int(math.sqrt(int(max(new_list, key=(lambda x: int(x)))))+10))    # 10 is a safety margin, I'd rather have computed some primes, that I don't need instead of missing some below
         new_list = [x for x in new_list if is_prime(int(x, base=base))]
         current_list = new_list
-        yield current_list
 
 
 
 if __name__ == "__main__":
-    for i in find_all_right_truncatable_primes(base=5):
-        print(i)
+    result = []
+    base = int(input("In which base do you want to calculate the right truncatable primes? Base: "))
+    for i in find_all_right_truncatable_primes(base=base):
+        result.append(i)
+    print(f'The resulting numbers in base {base}: {[int(x) for pl in result for x in pl]}')
+    print(f'The resulting numbers in base 10: {[int(x, base=base) for pl in result for x in pl]}')
