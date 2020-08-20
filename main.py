@@ -43,5 +43,7 @@ if __name__ == "__main__":
     base = int(input("In which base do you want to calculate the right truncatable primes? Base: "))
     for i in find_all_right_truncatable_primes(base=base):
         result.append(i)
-    print(f'The resulting numbers in base {base}: {[int(x) for pl in result for x in pl]}')
-    print(f'The resulting numbers in base 10: {[int(x, base=base) for pl in result for x in pl]}')
+    base_list = [int(x) for pl in result for x in pl]
+    print(f'The resulting numbers in base {base} (Maximum is: {max(base_list)}): {base_list}')
+    base_10_list = [int(x, base=base) for pl in result for x in pl]
+    print(f'The resulting numbers in base 10 (Maximum is: {max(base_10_list)}): {base_10_list}')
